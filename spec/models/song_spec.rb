@@ -11,5 +11,15 @@ RSpec.describe Song, type: :model do
 
       expect(song.games.length).to eq(4)
     end
+
+    it 'has many song_genres' do
+      song = Song.new
+
+      5.times do
+        song.song_genres.build
+      end
+
+      expect(song.song_genres.length).to eq 5
+    end
   end
 end
