@@ -43,5 +43,15 @@ RSpec.describe User, type: :model do
 
       expect(user.friendships.length).to eq 7
     end
+
+    it 'has many friends' do
+      user = User.new
+
+      3.times do
+        user.friends.build
+      end
+
+      expect(user.friends.length).to eq 3
+    end
   end
 end
