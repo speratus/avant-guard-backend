@@ -11,5 +11,12 @@ RSpec.describe Game, type: :model do
 
       expect(game.questions.length).to eq 3
     end
+
+    it 'belongs to a song' do
+      song = Song.new
+      game = song.games.build
+
+      expect(game.song).to eq(song)
+    end
   end
 end
