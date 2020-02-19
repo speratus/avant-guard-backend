@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Ranking, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'via associations' do
+    it 'belongs to a user' do
+      ranking = Ranking.new
+      user = User.new
+      ranking.user = user
+
+      expect(ranking.user).to eq(user)
+    end
+  end
 end
