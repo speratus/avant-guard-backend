@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     attr_encrypted :genius_token, key: ENV['DB_SECRET']
 
-    has_one :ranking
+    has_one :ranking, dependent: :destroy
 
     has_many :genre_scores, dependent: :destroy
 
