@@ -18,5 +18,12 @@ RSpec.describe Game, type: :model do
 
       expect(game.song).to eq(song)
     end
+
+    it 'belongs to a genre' do
+      genre = Genre.new
+      game = genre.games.build
+
+      expect(game.genre).to eq(genre)
+    end
   end
 end
