@@ -25,5 +25,12 @@ RSpec.describe Game, type: :model do
 
       expect(game.genre).to eq(genre)
     end
+
+    it 'belongs to a user' do
+      user = User.new
+      game = user.games.build
+
+      expect(game.user).to eq(user)
+    end
   end
 end
