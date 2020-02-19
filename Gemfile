@@ -19,6 +19,7 @@ gem 'rest-client'
 gem 'authorizer', git: 'git@github.com:speratus/authorizer.git'
 gem 'dotenv-rails'
 gem 'jwt'
+gem 'attr_encrypted', '~> 3.1.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
