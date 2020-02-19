@@ -17,6 +17,8 @@ gem 'puma', '~> 4.1'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rest-client'
 gem 'authorizer', git: 'git@github.com:speratus/authorizer.git'
+gem 'dotenv-rails'
+gem 'jwt'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
