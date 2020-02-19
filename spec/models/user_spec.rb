@@ -23,5 +23,15 @@ RSpec.describe User, type: :model do
 
       expect(user.games.length).to eq 5
     end
+
+    it 'has many genre_scores' do
+      user = User.new
+
+      6.times do
+        user.genre_scores.build
+      end
+
+      expect(user.genre_scores.length).to eq 6
+    end
   end
 end
