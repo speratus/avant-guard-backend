@@ -6,6 +6,9 @@ class GamesController < ApplicationController
     end
 
     def update
+        #TODO: Update the following logic to game.calculate_final_score
+        # when that logic is implemented.
+        ############################
         correct = @game.questions.map do |q|
             q.input == q.answer ? 1 : 0
         end
@@ -15,6 +18,7 @@ class GamesController < ApplicationController
         end
 
         @game.final_score = final_score
+        ###################################
 
         if @game.save
             render json: full_game_data(@game)
