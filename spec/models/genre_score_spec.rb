@@ -9,5 +9,13 @@ RSpec.describe GenreScore, type: :model do
 
       expect(genre_score.user).to eq(user)
     end
+
+    it 'belongs to a genre' do
+      genre = Genre.new
+
+      genre_score = genre.genre_scores.build
+
+      expect(genre_score.genre).to eq(genre)
+    end
   end
 end
