@@ -11,4 +11,15 @@ class User < ApplicationRecord
     has_many :friends, through: :friendships, source: :friended
 
     has_many :frienders, through: :friendships, source: :friender
+
+    validates :name, :username, :password, :genius_token, presence: true
+    validates :username: uniqueness: true
+
+    check_perm 'users#show' do |user, current_user|
+        !current_user.nil?
+    end
+
+    check_perm 'users#destroy', 'users#update' do |user, current_user|
+        user == current_user
+    end
 end
