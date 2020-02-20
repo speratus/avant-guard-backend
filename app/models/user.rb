@@ -9,4 +9,6 @@ class User < ApplicationRecord
 
     has_many :friendships, foreign_key: :friender_id, dependent: :destroy
     has_many :friends, through: :friendships, source: :friended
+
+    has_many :frienders, through: :friendships, source: :friender
 end
