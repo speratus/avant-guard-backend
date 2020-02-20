@@ -11,4 +11,8 @@ class User < ApplicationRecord
     has_many :friends, through: :friendships, source: :friended
 
     has_many :frienders, through: :friendships, source: :friender
+
+    validates :name, :username, :password, :genius_token, presence: true
+    validates :username: uniqueness: true
+
 end
