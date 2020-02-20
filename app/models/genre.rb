@@ -5,4 +5,6 @@ class Genre < ApplicationRecord
     has_many :games
 
     has_many :genre_scores
+
+    validates :name, presence: true
 end
