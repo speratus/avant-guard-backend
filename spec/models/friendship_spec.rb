@@ -17,5 +17,14 @@ RSpec.describe Friendship, type: :model do
       expect(friender.friends).to include(friended)
       # expect(friended.friendships).to include(friendship)
     end
+
+    it 'belongs to a friended' do
+      friender = User.new
+      friended = User.new
+
+      expect {friendship = friended.friendships.build(friender: friender)}.not_to raise_error
+
+      expect(friended.frienders).to include(friender)
+    end
   end
 end
