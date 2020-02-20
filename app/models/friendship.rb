@@ -5,6 +5,14 @@ class Friendship < ApplicationRecord
   validates :friender, :friended, presence: true
   validate :friender_and_friend_are_not_identical
 
+  check_perm 'friendships#create' do |friendship, user|
+    friendship.friender == user
+  end
+
+  check_perm 'friendships#destroy' do |friendship, user|
+    friendship.friender == user || friendship.friended == user
+  end
+
   def friender_and_friend_are_not_identical
     if self.friender == self.friended
       errors[:friender] << 'Friender must not be friended user'
