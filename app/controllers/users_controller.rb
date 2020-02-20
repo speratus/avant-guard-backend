@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
     def create
-
+        
     end
 
     def show
@@ -14,5 +14,11 @@ class UsersController < ApplicationController
 
     def destroy
 
+    end
+
+    private
+
+    def user_params
+        params.require(:user).permit(:name, :username, :password, :password_confirmation, :genius_token)
     end
 end
