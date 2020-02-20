@@ -5,7 +5,7 @@ class UsersController < ApplicationController
         user = User.new(user_params)
 
         if user.save
-            render json: user
+            render json: basic_user_data(user)
         else
             render json: {
                 message: 'Failed to create user',
@@ -15,14 +15,14 @@ class UsersController < ApplicationController
     end
 
     def show
-        render json: @user
+        render json: basic_user_data(@user)
     end
 
     def update
         @user.update_attributes(user_params)
 
         if @user.save
-            render json: @user
+            render json: basic_user_data(@user)
         else
             render json: {
                 message: "Update failed",
@@ -35,12 +35,12 @@ class UsersController < ApplicationController
         if @user.destroy!
             render json: {
                 message: 'successfully deleted user!',
-                user: @user
+                user: basic_user_data(@user)
             }
         else
             render json: {
                 message: 'failled to delete user',
-                user: @user
+                user: basic_user_data(@user)
             }
         end
     end
@@ -54,5 +54,9 @@ class UsersController < ApplicationController
     def verify_authentication
         user = User.find_by(id: params[:id])
         @user = check_authorization(user, current_user)
+    end
+
+    def basic_user_data(user)
+        user.to_json(only: :id, :name, :username)
     end
 end
