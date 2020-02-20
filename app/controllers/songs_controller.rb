@@ -2,7 +2,7 @@ class SongsController < ApplicationController
     before_action :authorize_song
 
     def show
-        render base_song_info(song)
+        render json: base_song_info(song)
     end
 
     private
@@ -13,6 +13,6 @@ class SongsController < ApplicationController
     end
 
     def base_song_info(song)
-        song.to_json(except: :created_at, :updated_at)
+        song.as_json(except: :created_at, :updated_at)
     end
 end

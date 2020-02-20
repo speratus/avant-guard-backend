@@ -57,6 +57,6 @@ class UsersController < ApplicationController
     end
 
     def basic_user_data(user)
-        user.to_json(only: :id, :name, :username)
+        user.as_json(only: :id, :name, :username)
     end
 end
