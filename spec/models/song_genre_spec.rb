@@ -6,7 +6,7 @@ RSpec.describe SongGenre, type: :model do
       song_genre = SongGenre.new
       song = Song.new
 
-      expect {song_genre.song = song}.to_not raise_error(NoMethodError)
+      expect {song_genre.song = song}.not_to raise_error
 
       expect(song_genre.song).to eq(song)
     end
