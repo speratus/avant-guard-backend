@@ -29,6 +29,11 @@ module GameLogic
         song
     end
 
+    def calculate_multiplier(listens, release_date)
+        age = (Date.today - Date.parse(release_date)).to_i
+        multiplier = age / (Math.log(listens))
+    end
+
     def use_db
         [true,false].sample
     end
