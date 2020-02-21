@@ -13,7 +13,7 @@ class User < ApplicationRecord
     has_many :frienders, through: :friendships, source: :friender
 
     validates :name, :username, :password, :genius_token, presence: true
-    validates :username: uniqueness: true
+    validates :username, uniqueness: true
 
     check_perm 'users#show' do |user, current_user|
         !current_user.nil?
