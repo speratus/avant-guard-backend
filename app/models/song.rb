@@ -8,6 +8,8 @@ class Song < ApplicationRecord
     validates :title, :artist, :release_date, presence: true
     validate :has_at_least_one_genre
 
+    attr_reader :listens
+
     check_perm 'songs#show' do |song, user|
         !user.nil?
     end

@@ -9,6 +9,7 @@ module GameLogic
         artist_name = track['artist']['name']
         album_title = track['album']['title']
         release_date = track['wiki']['published']
+        listens = track['playcount'].to_i
 
         genres = track['toptags']['tag'].map do |tag|
             Genre.find_or_create_by(name: tag['name'])
@@ -20,7 +21,8 @@ module GameLogic
             title: track_name, 
             album: album_title,
             release_date: release_date.split('')[2],
-            artist: artist
+            artist: artist,
+            listens: listens
         )
 
         genres.each |g| {song.genres << g}
