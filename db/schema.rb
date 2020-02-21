@@ -10,28 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_20_235623) do
+ActiveRecord::Schema.define(version: 2020_02_21_153358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "artist_genres", force: :cascade do |t|
-    t.bigint "artist_id", null: false
-    t.bigint "genre_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["artist_id"], name: "index_artist_genres_on_artist_id"
-    t.index ["genre_id"], name: "index_artist_genres_on_genre_id"
-  end
-
-  create_table "artist_songs", force: :cascade do |t|
-    t.bigint "artist_id", null: false
-    t.bigint "song_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["artist_id"], name: "index_artist_songs_on_artist_id"
-    t.index ["song_id"], name: "index_artist_songs_on_song_id"
-  end
 
   create_table "artists", force: :cascade do |t|
     t.string "name"
@@ -109,7 +91,7 @@ ActiveRecord::Schema.define(version: 2020_02_20_235623) do
   create_table "songs", force: :cascade do |t|
     t.string "title"
     t.string "release_date"
-    t.string "artist"
+    t.integer "artist_id"
     t.string "album"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -125,10 +107,6 @@ ActiveRecord::Schema.define(version: 2020_02_20_235623) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "artist_genres", "artists"
-  add_foreign_key "artist_genres", "genres"
-  add_foreign_key "artist_songs", "artists"
-  add_foreign_key "artist_songs", "songs"
   add_foreign_key "friendships", "users", column: "friended_id", on_delete: :cascade
   add_foreign_key "friendships", "users", column: "friender_id", on_delete: :cascade
   add_foreign_key "games", "genres"
