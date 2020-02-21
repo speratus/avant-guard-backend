@@ -13,7 +13,7 @@ class Song < ApplicationRecord
     end
     
     def has_at_least_one_genre
-        if song.genres.length < 1
+        if self.genres.length < 1
             errors[:genres] << 'Songs must have at least one genre'
         end
     end
