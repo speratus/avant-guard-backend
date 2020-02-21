@@ -5,3 +5,17 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#SEEDING PROCEDURE
+#
+# 1. QUERY LASTFM TOP ARTISTS
+#
+# 2. SAVE ARTIST DATA
+#
+# 3. QUERY EACH ARTIST'S TOP SONGS
+#
+# 4. SAVE TOP SONG DATA
+#
+# 5. QUERY EACH SONG'S TOP TAGS
+#
+# 6. SAVE TOP TAG DATA
