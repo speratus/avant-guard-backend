@@ -2,23 +2,12 @@ class GamesController < ApplicationController
     before_action :verify_game, except: [:create, :index]
 
     def create
+        game = check_authorization(Game.construct(current_user, game_params[:game]), current_user)
 
     end
 
     def update
-        #TODO: Update the following logic to game.calculate_final_score
-        # when that logic is implemented.
-        ############################
-        correct = @game.questions.map do |q|
-            q.input == q.answer ? 1 : 0
-        end
-
-        final_score = correct.reduce do |agg, c|
-            agg + (c * @game.multiplier)
-        end
-
-        @game.final_score = final_score
-        ###################################
+        @game.calculate_final_score(@game)
 
         if @game.save
             render json: full_game_data(@game)
@@ -40,6 +29,10 @@ class GamesController < ApplicationController
     end
 
     private
+    
+    def game_params
+        params.require(:game).permit(:genre, :artist)
+    end
 
     def verify_game
         game = Game.find_by(id: params[:id])

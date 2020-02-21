@@ -36,6 +36,20 @@ module GameLogic
         multiplier = age / (Math.log(listens))
     end
 
+    def calculate_final_score(game)
+        correct = game.questions.map do |q|
+            q.input == q.answer ? 1 : 0
+        end
+
+        final_score = correct.reduce do |agg, c|
+            agg + (c * game.multiplier)
+        end
+
+        game.final_score = final_score
+        game.save
+        final_score
+    end
+
     def use_db
         [true,false].sample
     end
