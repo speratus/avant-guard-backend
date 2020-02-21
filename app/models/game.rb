@@ -36,6 +36,27 @@ class Game < ApplicationRecord
         game.song = song
         game.multiplier = game.calculate_multiplier(song.listens, song.release_date)
         game.genre = song.genre
+
+        qts = Question.QUESTION_TYPES.keys
+
+        3.times do
+            t = qts.sample
+            question = Question.new(question_type: t, game: game)
+            case q:
+            when 'y'
+                question.answer = song.release_date.split(' ')[2]
+            when 'al'
+                question.answer = song.album
+            when 'ar'
+                question.answer = song.artist.name
+            when 't'
+                question.answer = song.title
+            end
+            qts.delete(q)
+            question.save
+            game.questions << question
+        end
+
         game.save
         game
     end
