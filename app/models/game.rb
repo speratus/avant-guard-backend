@@ -24,8 +24,4 @@ class Game < ApplicationRecord
         # 4. pick one from list and query for details
         # 5. save to db
     end
-
-    def queryLastFmArtists(artist_name)
-
-    end
 end
