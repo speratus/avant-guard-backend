@@ -29,36 +29,61 @@ module GameLogic
         song
     end
 
-    def pick_genre_from_db
+    def use_db
+        [true,false].sample
+    end
+
+    def pull_genre_from_db
         Genre.all.sample
     end
 
-    def pick_artist_from_db
+    def pull_artist_from_db
         Artist.all.sample
     end
 
-    def select_song_from_genre(genre)
+    def grab_song_from_genre(genre)
         genre.songs.sample
     end
 
-    def select_song_from_artist(artist)
+    def grab_song_from_artist(artist)
         artist.songs.sample
     end
 
     def pick_new_song_from_genre(genre)
-        song = select_song_from_genre(genre)
+        song = grab_song_from_genre(genre)
         resp = track_get_similar(song.artist.name, song.title)
-        new_song = save_track_info(resp)
+        possible_tracks = resp['similartracks']['track']
+        pick = possible_tracks.sample
+        track_title = pick['name']
+        artist_name = pick['artist']['name']
+        data = track_get_info(artist_name, track_title)
+        new_song = save_track_info(data)
         new_song
     end
 
     def pick_song_from_genre(genre)
-        indb = [true,false].sample
-
-        if indb
-            select_song_from_genre(genre)
+        if use_db
+            grab_song_from_genre(genre)
         else
             pick_new_song_from_genre(genre)
+        end
+    end
+
+    def pick_new_song_from_artist(artist)
+        track_list = artist_top_tracks(artist.name)
+        track_data = track_list['toptracks']['track'].sample
+
+        track_title = track_data['name']
+        track_info = track_get_info(artist.name, track_title)
+        new_song = save_track_info(track_info)
+        new_song
+    end
+
+    def pick_song_from_artist(artist)
+        if use_db
+            grab_song_from_artist(artist)
+        else
+            pick_new_song_from_artist(artist)
         end
     end
 end
