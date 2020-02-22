@@ -29,15 +29,22 @@ RSpec.describe Artist, type: :model do
 
       artist.save
 
-      # puts "There are #{Genre.all.length} genres. They are #{Genre.all.map {|g| g.name}}"
-
-      # puts "artist: #{artist}. artist songs: #{artist.songs.map {|s| s.title}}. artist genres: #{artist.genres.map {|g| g.name}}"
-
-      # artist.songs.each do |s|
-      #   puts "song #{s.title} has #{s.genres.length} genres. they are #{s.genres.map {|g| g.name}}."
-      # end
-
       expect(artist.genres.length).to be > 5
+    end
+
+  end
+
+  context 'validates' do
+    it 'successfully if info is valid' do
+      artist = Artist.new(name: 'test')
+      
+      expect(artist.save).to eq true
+    end
+
+    it 'unsuccessfully if info is invalid' do
+      artist = Artist.new
+
+      expect(artist.save).to eq false
     end
   end
 end
