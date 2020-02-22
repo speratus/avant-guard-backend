@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
     private
 
     def check_params
-        params.require(:questio).permit(:input)
+        params.require(:question).permit(:input)
     end
 
     def verify_question
