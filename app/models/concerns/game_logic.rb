@@ -1,4 +1,4 @@
-require_relative '../../../last_fm_query'
+require_relative '../../../lib/last_fm_query'
 
 module GameLogic
     include LastFmQuery
@@ -25,7 +25,7 @@ module GameLogic
             listens: listens
         )
 
-        genres.each |g| {song.genres << g}
+        genres.each {|g| song.genres << g}
         song.save
         artist.save
         song

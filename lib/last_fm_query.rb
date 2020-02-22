@@ -11,7 +11,7 @@ module LastFmQuery
 
     def track_get_info(artist_name, track_name, mbid = nil)
         method = "?method=track.getinfo"
-        if mb_id
+        if mbid
             url = LAST_FM_BASE + method + "&mbid=#{mbid}" + APPENDIX
         else
             url = LAST_FM_BASE + method + "&artist=#{artist_name}&track=#{track_name}" + APPENDIX

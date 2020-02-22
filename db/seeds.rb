@@ -51,14 +51,34 @@ tracks.each do |t|
     puts "Looking up details for #{artist_name} song: #{title}"
     track_details = track_get_info(URI.encode(artist_name), URI.encode(title))['track']
 
-    album_title = track_details['album']['title']
-    puts "track found on album #{album_title}"
+    if track_details['error']
+        puts "There was an error. Skipping song"
+        next
+    end
+
+    if track_details['album']
+        album_title = track_details['album']['title']
+        puts "track found on album #{album_title}"
+    else
+        puts "#{title} is a single."
+        album_title = 'Single'
+    end
+
+    if track_details['wiki']
+        release_date = track_details['wiki']['published']
+    end
+
 
     puts "Locating or creating artist #{artist_name}"
     artist = Artist.new(name: artist_name)
 
     puts "Building song object"
-    song = artist.songs.build(title: title, album: album_title, listens: track_details['playcount'].to_i)
+    song = artist.songs.build(
+        title: title, 
+        album: album_title, 
+        listens: track_details['playcount'].to_i, 
+        release_date: release_date
+    )
 
     puts "Adding genres"
     track_details['toptags']['tag'].each do |tag|
@@ -74,7 +94,7 @@ tracks.each do |t|
     artist.save
     song_save_count += 1
 
-    sleep_time = rand(1.0...2.5)
+    sleep_time = rand(1.0...5.0)
     puts "Sleeping for #{sleep_time} seconds"
     sleep(sleep_time)
 end

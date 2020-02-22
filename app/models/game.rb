@@ -42,7 +42,7 @@ class Game < ApplicationRecord
         3.times do
             t = qts.sample
             question = Question.new(question_type: t, game: game)
-            case q:
+            case t
             when 'y'
                 question.answer = song.release_date.split(' ')[2]
             when 'al'
