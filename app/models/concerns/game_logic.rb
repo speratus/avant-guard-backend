@@ -107,4 +107,15 @@ module GameLogic
             pick_new_song_from_artist(artist)
         end
     end
+
+
+    def lyrics_sample(song)
+        puts song.title
+        raw_lyrics = NokogiriLyrics::get_results(song.title)
+        line_by_line = raw_lyrics.split("\n")
+        lines = line_by_line[2..-1]
+        delimit_verses = lines.map {|l| l == "" ? "__" : l}.join("\n")
+        verses = delimit_verses.split("__")
+        verses.sample
+    end
 end
