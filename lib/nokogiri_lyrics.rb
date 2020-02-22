@@ -38,14 +38,4 @@ module NokogiriLyrics
         lyrics = lyrics_doc.css('.col-xs-12.col-lg-8.text-center > div')[4]
         lyrics.content
     end
-
-    def self.lyrics_sample(song)
-        puts song.title
-        raw_lyrics = NokogiriLyrics::get_results(song.title)
-        line_by_line = raw_lyrics.split("\n")
-        lines = line_by_line[2..-1]
-        delimit_verses = lines.map {|l| l == "" ? "__" : l}.join("\n")
-        verses = delimit_verses.split("__")
-        verses.sample
-    end
 end
