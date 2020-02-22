@@ -49,12 +49,13 @@ tracks.each do |t|
     artist_name = t['artist']['name']
 
     puts "Looking up details for #{artist_name} song: #{title}"
-    track_details = track_get_info(URI.encode(artist_name), URI.encode(title))['track']
+    response = track_get_info(URI.encode(artist_name), URI.encode(title))
 
-    if track_details['error']
+    if response['error']
         puts "There was an error. Skipping song"
         next
     end
+    track_details = response['track']
 
     if track_details['album']
         album_title = track_details['album']['title']
