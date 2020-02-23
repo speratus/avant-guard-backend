@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 
     def create
         game = check_authorization(Game.construct(current_user, game_params[:game]), current_user)
-
+        render json: game_challenge(game)
     end
 
     def update
@@ -49,6 +49,15 @@ class GamesController < ApplicationController
         game.as_json(except: [:created_at, :updated_at], include: {
             questions: {except: [:created_at, :updated_at]}
         })
+    end
+
+    def game_challenge(game)
+        game.as_json(
+            only: [:lyrics, :multiplier], 
+            include: {
+                questions: {only: :question_type}
+            }
+        )
     end
 
 end
