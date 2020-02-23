@@ -32,4 +32,29 @@ RSpec.describe Song, type: :model do
       expect(song.genres.length).to eq 3
     end
   end
+
+  context 'validates' do
+    it 'successfully when has valid attributes' do
+      a = Artist.new
+      song = a.songs.build(title: 'hello world', release_date: '2020 02 13')
+      song.genres.build(name: 'hyper-pop')
+
+      expect(song.save).to eq true
+    end
+
+    it 'unsuccessfully when it is missing a title' do
+      a = Artist.new(name: 'hi')
+      song = a.songs.build(release_date: '01012020')
+      song.genres.build(name: 'anthem')
+      
+      expect(song.save).to be false
+    end
+
+    it 'unsuccessfully when it is missing a genre' do
+      a = Artist.new(name: 'billy')
+      song = a.songs.build(title: 'real fun', release_date: '01012020')
+
+      expect(song.save).to be false
+    end
+  end
 end

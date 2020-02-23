@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_223630) do
+ActiveRecord::Schema.define(version: 2020_02_22_030030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "artists", force: :cascade do |t|
+    t.string "name"
+    t.integer "fm_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "friendships", force: :cascade do |t|
     t.bigint "friender_id", null: false
@@ -51,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_223630) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "fm_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -59,6 +67,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_223630) do
     t.bigint "game_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "question_type"
     t.index ["game_id"], name: "index_questions_on_game_id"
   end
 
@@ -83,10 +92,13 @@ ActiveRecord::Schema.define(version: 2020_02_19_223630) do
   create_table "songs", force: :cascade do |t|
     t.string "title"
     t.string "release_date"
-    t.string "artist"
+    t.integer "artist_id"
     t.string "album"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "fm_id"
+    t.integer "listens"
+    t.string "happi_url"
   end
 
   create_table "users", force: :cascade do |t|
