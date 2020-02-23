@@ -1,4 +1,5 @@
 require_relative '../../../lib/last_fm_query'
+require_relative '../../../lib/nokogiri_lyrics'
 
 module GameLogic
     include LastFmQuery

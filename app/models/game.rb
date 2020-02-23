@@ -6,6 +6,8 @@ class Game < ApplicationRecord
 
     has_many :questions, dependent: :destroy
 
+    attr_accessor :lyrics
+
     validates :multiplier, :user, :song, :genre, presence: true
 
     check_perm 'games#create' do |game, user|
@@ -58,6 +60,8 @@ class Game < ApplicationRecord
         end
 
         game.save
+
+        self.lyrics = lyrics_sample(self.song)
         game
     end
 end
