@@ -28,7 +28,7 @@ module NokogiriLyrics
             end
         else 
             return "Could not find lyrics" if remix
-            original_title = song_title.split(/ [\(\[]f(?:ea)?t\.\s+(?:\w+\s)+\w+(?:\s)?[\)\]]/)[0]
+            original_title = song_title.split(/\s?[\(\[]f(?:ea)?t\.\s[\w\W]+\s?[\)\]]/i)[0]
             return get_results(original_title, remix = true)
         end
             

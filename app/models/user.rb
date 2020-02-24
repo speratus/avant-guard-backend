@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    has_secure_password
     attr_encrypted :genius_token, key: ENV['DB_SECRET']
 
     has_one :ranking, dependent: :destroy
@@ -12,7 +13,7 @@ class User < ApplicationRecord
 
     has_many :frienders, through: :friendships, source: :friender
 
-    validates :name, :username, :password, :genius_token, presence: true
+    validates :name, :username, :password, presence: true
     validates :username, uniqueness: true
 
     check_perm 'users#show' do |user, current_user|
