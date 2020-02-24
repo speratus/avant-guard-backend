@@ -13,4 +13,8 @@ class Artist < ApplicationRecord
         end
         genres
     end
+
+    check_perm('artists#index') do |artist, user|
+        !user.nil?
+    end
 end
