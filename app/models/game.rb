@@ -51,7 +51,8 @@ class Game < ApplicationRecord
             case t
             when :y
                 # puts "#{song} was released on: #{song.release_date}"
-                question.answer = song.release_date.split(' ')[2]
+                puts "#{song} was released on: #{song.release_date.split(' ')[2]}"
+                question.answer = song.release_date.split(' ')[2][0..-2]
             when :al
                 # puts "#{song} appears on the album #{song.album}"
                 question.answer = song.album
@@ -72,7 +73,7 @@ class Game < ApplicationRecord
 
         game.save
 
-        # puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
+        puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
 
         game.lyrics = game.lyrics_sample(game.song)
         game

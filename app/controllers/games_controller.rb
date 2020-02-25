@@ -49,7 +49,11 @@ class GamesController < ApplicationController
 
     def full_game_data(game)
         game.as_json(except: [:created_at, :updated_at], include: {
-            questions: {except: [:created_at, :updated_at]}
+            questions: {except: [:created_at, :updated_at]},
+            song: {
+                only: [:id, :title, :release_date, :album],
+                include: {artist: {only: :name}}
+            }
         })
     end
 

@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
     before_action :verify_question
 
     def check
-        @question.input = check_params[:input]
+        @question.input = check_params[:answer]
 
         if @question.save
             if @question.input == @question.answer
@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
     private
 
     def check_params
-        params.require(:question).permit(:input)
+        params.require(:question).permit(:answer)
     end
 
     def verify_question

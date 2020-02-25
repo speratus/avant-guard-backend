@@ -35,14 +35,21 @@ module GameLogic
     def calculate_multiplier(listens, release_date)
         age = (Date.today - Date.parse(release_date)).to_i
         multiplier = age / (Math.log(listens))
+        multiplier.ceil
     end
 
     def calculate_final_score(game)
         correct = game.questions.map do |q|
+            puts "------------#{q.input}; #{q.answer}"
             q.input == q.answer ? 1 : 0
         end
 
-        final_score = correct.reduce do |agg, c|
+        puts "++++++++++++++++++++++++"
+        puts "the correct array looks like: #{correct}"
+
+        final_score = correct.reduce(0) do |agg, c|
+            puts "--------------"
+            puts "agg #{agg}; #{c}; #{game.multiplier}"
             agg + (c * game.multiplier)
         end
 
