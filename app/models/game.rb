@@ -39,6 +39,7 @@ class Game < ApplicationRecord
         end
         game.song = song
         game.multiplier = game.calculate_multiplier(song.listens, song.release_date)
+        game.save
         game.genre = song.genres.first
 
         qts = Question::QUESTION_TYPES.keys
@@ -46,24 +47,32 @@ class Game < ApplicationRecord
         3.times do
             t = qts.sample
             question = Question.new(question_type: t, game: game)
+            # puts "The question keys are: #{qts}"
             case t
-            when 'y'
+            when :y
+                # puts "#{song} was released on: #{song.release_date}"
                 question.answer = song.release_date.split(' ')[2]
-            when 'al'
+            when :al
+                # puts "#{song} appears on the album #{song.album}"
                 question.answer = song.album
-            when 'ar'
+            when :ar
+                # puts "#{song} was written by #{song.artist.name}"
                 question.answer = song.artist.name
-            when 't'
+            when :t
+                # puts "#{song}'s name is #{song.title}'"
                 question.answer = song.title
             end
             qts.delete(t)
+            # puts "The answer to the question is: #{question.answer}"
             question.save
             game.questions << question
+            # puts "============The question has an id of #{question.id}"
+            # puts "+++++++++There were these errors with saving the question: #{question.errors.full_messages}" if question.errors.any?
         end
 
         game.save
 
-        puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
+        # puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
 
         game.lyrics = game.lyrics_sample(game.song)
         game
