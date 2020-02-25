@@ -52,7 +52,7 @@ module GameLogic
     end
 
     def use_db
-        [true,false].sample
+        [true].sample
     end
 
     def pull_genre_from_db
@@ -71,9 +71,13 @@ module GameLogic
         artist.songs.sample
     end
 
+    def url_safe(string)
+        URI.encode(string)
+    end
+
     def pick_new_song_from_genre(genre)
         song = grab_song_from_genre(genre)
-        resp = track_get_similar(song.artist.name, song.title)
+        resp = track_get_similar(url_safe(song.artist.name), url_safe(song.title))
         possible_tracks = resp['similartracks']['track']
         pick = possible_tracks.sample
         track_title = pick['name']
@@ -112,7 +116,7 @@ module GameLogic
 
     def lyrics_sample(song)
         puts song.title
-        raw_lyrics = NokogiriLyrics::get_results(song.title)
+        raw_lyrics = NokogiriLyrics::get_results(song.title, song.artist.name)
         line_by_line = raw_lyrics.split("\n")
         lines = line_by_line[2..-1]
         delimit_verses = lines.map {|l| l == "" ? "__" : l}.join("\n")

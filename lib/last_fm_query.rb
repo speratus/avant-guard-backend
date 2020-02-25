@@ -26,6 +26,7 @@ module LastFmQuery
         else
             url = LAST_FM_BASE + method + "&artist=#{artist}&track=#{track}"
         end
+        puts "+++++++++++++++++#{url}"
         result = JSON.parse(RestClient.get(url))
     end
 

@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create]
   resources :genres, only: [:index]
   resources :artists, only: [:index]
+  resources :games, except: [:delete]
 end

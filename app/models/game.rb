@@ -18,7 +18,7 @@ class Game < ApplicationRecord
         game.user == user
     end
 
-    def self.construct(user, genre:nil, artist:nil)
+    def self.construct(user, options)
         #SONG CHOOSING PROCEDURE
         #
         # 1. 50/50 chance to pick song in db or out of db
@@ -27,9 +27,11 @@ class Game < ApplicationRecord
         # 4. pick one from list and query for details
         # 5. save to db
         game = Game.new(user: user)
-        if genre
+        if options['genre']
+            genre = Genre.find_by(name: options['genre'])
             song = game.pick_song_from_genre(genre)
-        elsif artist
+        elsif options['artist']
+            artist = Artist.find_by(name: options['artist'])
             song = game.pick_song_from_artist(artist)
         else
             raise ArgumentError, 'You must specify either a genre or an artist!'
@@ -37,9 +39,9 @@ class Game < ApplicationRecord
         end
         game.song = song
         game.multiplier = game.calculate_multiplier(song.listens, song.release_date)
-        game.genre = song.genre
+        game.genre = song.genres.first
 
-        qts = Question.QUESTION_TYPES.keys
+        qts = Question::QUESTION_TYPES.keys
 
         3.times do
             t = qts.sample
@@ -54,14 +56,16 @@ class Game < ApplicationRecord
             when 't'
                 question.answer = song.title
             end
-            qts.delete(q)
+            qts.delete(t)
             question.save
             game.questions << question
         end
 
         game.save
 
-        self.lyrics = lyrics_sample(self.song)
+        puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
+
+        game.lyrics = game.lyrics_sample(game.song)
         game
     end
 end

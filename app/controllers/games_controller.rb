@@ -2,7 +2,9 @@ class GamesController < ApplicationController
     before_action :verify_game, except: [:create, :index]
 
     def create
-        game = check_authorization(Game.construct(current_user, game_params[:game]), current_user)
+        puts "===========================#{game_params}"
+        game = check_authorization(Game.construct(current_user, game_params), current_user)
+        puts "--------------Game Lyrics: #{game.lyrics}"
         render json: game_challenge(game)
     end
 
@@ -53,7 +55,8 @@ class GamesController < ApplicationController
 
     def game_challenge(game)
         game.as_json(
-            only: [:lyrics, :multiplier], 
+            only: [:multiplier], 
+            methods: [:lyrics],
             include: {
                 questions: {only: :question_type}
             }
