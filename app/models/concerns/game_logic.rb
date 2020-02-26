@@ -113,7 +113,7 @@ module GameLogic
 
         track_title = pick['name']
         artist_name = pick['artist']['name']
-        data = track_get_info(artist_name, track_title)
+        data = track_get_info(url_safe(artist_name), url_safe(track_title))
 
         begin
             # byebug
