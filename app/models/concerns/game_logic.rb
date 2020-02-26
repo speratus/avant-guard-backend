@@ -8,8 +8,13 @@ module GameLogic
         track = track_info['track']
         track_name = track['name']
         artist_name = track['artist']['name']
-        album_title = track['album']['title']
-        release_date = track['wiki']['published']
+        album_title = track['album'] ? track['album']['title'] : 'Single'
+        release_date = track['wiki']['published'] if track['wiki']
+
+        unless release_date
+            raise "Please pick a new song. That song does not have published info"
+        end
+
         listens = track['playcount'].to_i
 
         genres = track['toptags']['tag'].map do |tag|
@@ -21,7 +26,7 @@ module GameLogic
         song = Song.new(
             title: track_name, 
             album: album_title,
-            release_date: release_date.split('')[2],
+            release_date: release_date,
             artist: artist,
             listens: listens
         )
@@ -72,7 +77,7 @@ module GameLogic
     end
 
     def use_db
-        [true].sample
+        [true, false].sample
     end
 
     def pull_genre_from_db
@@ -102,7 +107,13 @@ module GameLogic
         pick = possible_tracks.sample
         track_title = pick['name']
         artist_name = pick['artist']['name']
-        data = track_get_info(artist_name, track_title)
+        begin
+            data = track_get_info(artist_name, track_title)
+        rescue
+            puts "Could not find any songs like #{song.title}, trying again."
+            return pick_song_from_genre(genre)
+        end
+        # byebug
         new_song = save_track_info(data)
         new_song
     end
@@ -120,8 +131,14 @@ module GameLogic
         track_data = track_list['toptracks']['track'].sample
 
         track_title = track_data['name']
-        track_info = track_get_info(artist.name, track_title)
-        new_song = save_track_info(track_info)
+        track_info = track_get_info(url_safe(artist.name), url_safe(track_title))
+        puts "************* Track info: #{track_info}"
+        begin
+            new_song = save_track_info(track_info)
+        rescue
+            puts "Could not find a track with published info"
+            return pick_song_from_artist(artist)
+        end
         new_song
     end
 

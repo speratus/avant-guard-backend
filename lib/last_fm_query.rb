@@ -20,7 +20,7 @@ module LastFmQuery
     end
 
     def track_get_similar(artist, track, mbid = nil)
-        method = "?method=track.getsimilar"
+        method = "?method=track.getsimilar" + APPENDIX
         if mbid
             url = LAST_FM_BASE + method + "&mbid=#{mbid}" + APPENDIX
         else
