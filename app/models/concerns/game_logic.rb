@@ -161,6 +161,11 @@ module GameLogic
     def lyrics_sample(song)
         puts song.title
         raw_lyrics = NokogiriLyrics::get_results(song.title, song.artist.name)
+
+        unless raw_lyrics.include?("\n")
+            return raw_lyrics
+        end
+
         line_by_line = raw_lyrics.split("\n")
         lines = line_by_line[2..-1]
         delimit_verses = lines.map {|l| l == "" ? "__" : l}.join("\n")
