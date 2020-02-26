@@ -49,6 +49,9 @@ module NokogiriLyrics
         end
 
         # puts "The query is #{query}"
+        unless query
+            return "Could not find lyrics for this song..."
+        end
             
         address = query.css('a')[0].attributes['href']
 

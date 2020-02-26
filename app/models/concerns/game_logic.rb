@@ -105,16 +105,23 @@ module GameLogic
         resp = track_get_similar(url_safe(song.artist.name), url_safe(song.title))
         possible_tracks = resp['similartracks']['track']
         pick = possible_tracks.sample
+
+        unless pick
+            puts "That track has no similar songs"
+            return pick_song_from_genre(genre)
+        end
+
         track_title = pick['name']
         artist_name = pick['artist']['name']
+        data = track_get_info(artist_name, track_title)
+
         begin
-            data = track_get_info(artist_name, track_title)
+            # byebug
+            new_song = save_track_info(data)
         rescue
             puts "Could not find any songs like #{song.title}, trying again."
             return pick_song_from_genre(genre)
         end
-        # byebug
-        new_song = save_track_info(data)
         new_song
     end
 
