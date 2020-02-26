@@ -16,6 +16,34 @@ class User < ApplicationRecord
     validates :name, :username, :password, presence: true
     validates :username, uniqueness: true
 
+    def calculate_genre_scores(genre)
+        games = self.games.filter {|g| g.genre == genre}
+        puts "genre is nil? #{genre.nil?} games: #{games}. games length #{games.length}"
+        score = games.reduce(0) {|agg, g| agg + g.final_score }
+        genre_score = GenreScore.new
+        genre_score.score = score
+        genre_score.user = self
+        genre_score.genre = genre
+        genre_score.save
+    end
+
+    def calculate_ranking
+        puts "+===================="
+        puts "Calculating rankings"
+        ranking = self.ranking ? self.ranking : Ranking.new(user: self)
+        grand_total = self.genre_scores.reduce(0) {|agg, gs| agg + gs.score}
+        ranking.total_score = grand_total
+        res = ranking.save
+        puts "Ranking save failed because #{ranking.errors.full_messages}" if !res
+        rankings = Ranking.order(:total_score)
+        rankings.each_with_index do |r, i|
+            r.rank = i
+            r.save
+        end
+        # ranking.reload
+        # ranking
+    end
+
     check_perm 'users#show' do |user, current_user|
         !current_user.nil?
     end

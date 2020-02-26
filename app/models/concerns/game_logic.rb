@@ -55,6 +55,9 @@ module GameLogic
 
         game.final_score = final_score
         game.save
+
+        game.user.calculate_genre_scores(game.genre)
+        game.user.calculate_ranking
         final_score
     end
 

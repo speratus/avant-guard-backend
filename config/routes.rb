@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   resources :genres, only: [:index]
   resources :artists, only: [:index]
   resources :games, except: [:delete]
+  resources :rankings, only: [:index]
   patch '/questions/:id', to: 'questions#check'
 end

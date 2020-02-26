@@ -12,6 +12,7 @@ class GamesController < ApplicationController
         @game.calculate_final_score(@game)
 
         if @game.save
+            # puts "Updating game: #{full_game_data(@game)}"
             render json: full_game_data(@game)
         else
             render json: {
