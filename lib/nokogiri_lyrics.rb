@@ -45,10 +45,13 @@ module NokogiriLyrics
         else 
             return "Could not find lyrics" if remix
             original_title = song_title.split(/\s?[\(\[]f(?:ea)?t\.\s[\w\W]+\s?[\)\]]/i)[0]
-            return get_results(original_title, remix = true)
+            return get_results(original_title, artist_name, remix = true)
         end
 
         # puts "The query is #{query}"
+        unless query
+            return "Could not find lyrics for this song..."
+        end
             
         address = query.css('a')[0].attributes['href']
 

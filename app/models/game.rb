@@ -39,11 +39,12 @@ class Game < ApplicationRecord
         end
         game.song = song
         game.multiplier = game.calculate_multiplier(song.listens, song.release_date)
+        game.final_score = 0
         game.save
         game.genre = song.genres.first
 
         qts = Question::QUESTION_TYPES.keys
-        
+
         3.times do
             t = qts.sample
             question = Question.new(question_type: t, game: game)
