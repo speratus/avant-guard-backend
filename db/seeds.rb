@@ -33,6 +33,9 @@ puts "Destroying existing db entries"
 Song.destroy_all
 Artist.destroy_all
 Genre.destroy_all
+Game.destroy_all
+Ranking.destroy_all
+GenreScore.destroy_all
 
 
 puts "Retrieving charts data"
@@ -71,7 +74,7 @@ tracks.each do |t|
 
 
     puts "Locating or creating artist #{artist_name}"
-    artist = Artist.new(name: artist_name)
+    artist = Artist.find_or_create_by(name: artist_name)
 
     puts "Building song object"
     song = artist.songs.build(

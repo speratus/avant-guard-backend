@@ -6,7 +6,7 @@ class Game < ApplicationRecord
 
     has_many :questions, dependent: :destroy
 
-    attr_accessor :lyrics
+    attr_accessor :lyrics, :image
 
     validates :multiplier, :user, :song, :genre, presence: true
 
@@ -43,7 +43,7 @@ class Game < ApplicationRecord
         game.genre = song.genres.first
 
         qts = Question::QUESTION_TYPES.keys
-
+        
         3.times do
             t = qts.sample
             question = Question.new(question_type: t, game: game)

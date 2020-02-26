@@ -11,6 +11,12 @@ class GamesController < ApplicationController
     def update
         @game.calculate_final_score(@game)
 
+        img = @game.fetch_image(@game.song)
+
+        puts "The image is: #{img}"
+
+        @game.image = img if img
+
         if @game.save
             # puts "Updating game: #{full_game_data(@game)}"
             render json: full_game_data(@game)
@@ -49,12 +55,15 @@ class GamesController < ApplicationController
     end
 
     def full_game_data(game)
-        game.as_json(except: [:created_at, :updated_at], include: {
-            questions: {except: [:created_at, :updated_at]},
-            song: {
-                only: [:id, :title, :release_date, :album],
-                include: {artist: {only: :name}}
-            }
+        game.as_json(
+            except: [:created_at, :updated_at], 
+            methods: [:image],
+            include: {
+                questions: {except: [:created_at, :updated_at]},
+                song: {
+                    only: [:id, :title, :release_date, :album],
+                    include: {artist: {only: :name}}
+                }
         })
     end
 

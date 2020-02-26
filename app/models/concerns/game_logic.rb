@@ -32,6 +32,16 @@ module GameLogic
         song
     end
 
+    def fetch_image(song)
+        artist_name = song.artist.name
+        song_name = song.title
+        results = track_get_info(artist_name, song_name)
+        if results['track']['album']
+            return results['track']['album']['image'][2]["#text"]
+        end
+        nil
+    end
+
     def calculate_multiplier(listens, release_date)
         age = (Date.today - Date.parse(release_date)).to_i
         multiplier = age / (Math.log(listens))

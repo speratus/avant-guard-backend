@@ -35,7 +35,7 @@ class User < ApplicationRecord
         ranking.total_score = grand_total
         res = ranking.save
         puts "Ranking save failed because #{ranking.errors.full_messages}" if !res
-        rankings = Ranking.order(:total_score)
+        rankings = Ranking.order('total_score desc')
         rankings.each_with_index do |r, i|
             r.rank = i
             r.save
