@@ -178,6 +178,15 @@ module GameLogic
         song
     end
 
+    def get_clip(song)
+        result = search_for_track(song)
+        details = track_details(result.id)
+
+        raise "No preview available for #{song.title}, please pick a different song" if details.preview_url.nil?
+
+        details.preview_url
+    end
+
 
     def lyrics_sample(song)
         puts song.title
