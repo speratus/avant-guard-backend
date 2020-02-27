@@ -3,6 +3,7 @@ require_relative '../../../lib/nokogiri_lyrics'
 
 module GameLogic
     include LastFmQuery
+    include ClipQuery
 
     def save_track_info(track_info)
         track = track_info['track']
@@ -161,6 +162,20 @@ module GameLogic
         else
             pick_new_song_from_artist(artist)
         end
+    end
+
+    def random_song(options)
+        if options['genre']
+            genre = Genre.find_by(name: options['genre'])
+            song = game.pick_song_from_genre(genre)
+        elsif options['artist']
+            artist = Artist.find_by(name: options['artist'])
+            song = game.pick_song_from_artist(artist)
+        else
+            raise ArgumentError, 'You must specify either a genre or an artist!'
+            return
+        end
+        song
     end
 
 
