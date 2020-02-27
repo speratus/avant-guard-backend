@@ -20,7 +20,7 @@ class User < ApplicationRecord
         games = self.games.filter {|g| g.genre == genre}
         puts "genre is nil? #{genre.nil?} games: #{games}. games length #{games.length}"
         score = games.reduce(0) {|agg, g| agg + g.final_score }
-        genre_score = GenreScore.new
+        genre_score = GenreScore.find_or_create_by(genre: genre)
         genre_score.score = score
         genre_score.user = self
         genre_score.genre = genre
