@@ -3,6 +3,7 @@ require_relative '../../../lib/nokogiri_lyrics'
 
 module GameLogic
     include LastFmQuery
+    include ClipQuery
 
     def save_track_info(track_info)
         track = track_info['track']

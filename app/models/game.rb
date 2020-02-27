@@ -6,7 +6,7 @@ class Game < ApplicationRecord
 
     has_many :questions, dependent: :destroy
 
-    attr_accessor :lyrics, :image
+    attr_accessor :lyrics, :image, :clip_address
 
     validates :multiplier, :user, :song, :genre, presence: true
 
@@ -27,6 +27,7 @@ class Game < ApplicationRecord
         # 4. pick one from list and query for details
         # 5. save to db
         game = Game.new(user: user)
+<<<<<<< HEAD
         if options['genre']
             genre = Genre.find_by(name: options['genre'])
             song = game.pick_song_from_genre(genre)
@@ -42,6 +43,9 @@ class Game < ApplicationRecord
             raise 'Insufficient Data to build !'
         end
 
+=======
+        song = game.random_song(options)
+>>>>>>> adds clip querying functionality
         game.song = song
         game.multiplier = game.calculate_multiplier(song.listens, song.release_date)
         game.final_score = 0
