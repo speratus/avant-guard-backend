@@ -163,6 +163,29 @@ module GameLogic
         end
     end
 
+    def random_song(options)
+        if options['genre']
+            genre = Genre.find_by(name: options['genre'])
+            song = game.pick_song_from_genre(genre)
+        elsif options['artist']
+            artist = Artist.find_by(name: options['artist'])
+            song = game.pick_song_from_artist(artist)
+        else
+            raise ArgumentError, 'You must specify either a genre or an artist!'
+            return
+        end
+        song
+    end
+
+    def get_clip(song)
+        result = search_for_track(song)
+        details = track_details(result.id)
+
+        raise "No preview available for #{song.title}, please pick a different song" if details.preview_url.nil?
+
+        details.preview_url
+    end
+
 
     def lyrics_sample(song)
         puts song.title

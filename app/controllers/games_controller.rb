@@ -75,7 +75,7 @@ class GamesController < ApplicationController
     def game_challenge(game)
         game.as_json(
             only: [:id, :multiplier], 
-            methods: [:lyrics],
+            methods: [:lyrics, :clip_address],
             include: {
                 questions: {only: [:id, :question_type]}
             }

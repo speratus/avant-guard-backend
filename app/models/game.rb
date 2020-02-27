@@ -81,7 +81,11 @@ class Game < ApplicationRecord
 
         puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
 
-        game.lyrics = game.lyrics_sample(game.song)
+        if ENV['USE_CLIPS']
+            
+        else
+            game.lyrics = game.lyrics_sample(game.song)
+        end
         game
     end
 end
