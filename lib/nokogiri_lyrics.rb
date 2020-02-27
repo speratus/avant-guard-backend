@@ -40,7 +40,8 @@ module NokogiriLyrics
                 #     false
                 # end
                 title = td.css('a')[0].content
-                song_title.start_with?(title)
+                matcher = Regexp.new(song_title, true)
+                !(title =~ matcher).nil?
             end
         else 
             return "Could not find lyrics" if remix
