@@ -82,7 +82,12 @@ class Game < ApplicationRecord
         puts "The song is: #{game.song} with an artist name of #{game.song.artist.name} and artist of #{game.song.artist}"
 
         if ENV['USE_CLIPS']
-            game.clip_address = game.get_clip(game.song)
+            begin
+                game.clip_address = game.get_clip(game.song)
+            rescue
+                puts "!!!!!!!!!!!!!   COULD NOT FIND CLIP   !!!!!!!!!!!!!!!!!!"
+                game.lyrics = game.lyrics_sample(game.song) 
+            end
         else
             game.lyrics = game.lyrics_sample(game.song)
         end
