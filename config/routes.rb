@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   resources :artists, only: [:index]
   resources :games, except: [:delete]
   resources :rankings, only: [:index]
-  reources :friendships
+  resources :friendships, only: [:create, :destroy]
   patch '/questions/:id', to: 'questions#check'
 end
