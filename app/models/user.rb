@@ -48,7 +48,7 @@ class User < ApplicationRecord
         !current_user.nil?
     end
 
-    check_perm 'users#destroy', 'users#update' do |user, current_user|
+    check_perm 'users#destroy', 'users#update', 'users#friends' do |user, current_user|
         user == current_user
     end
 end
