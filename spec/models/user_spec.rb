@@ -53,5 +53,15 @@ RSpec.describe User, type: :model do
 
       expect(user.friends.length).to eq 3
     end
+
+    # it 'has many friendedships' do
+    #   friended = User.create
+    #   friender = User.create
+
+    #   friender.friendships.build(friended: friended)
+    #   friender.save
+
+    #   expect(friended.friendedships).to include(friender.friendships[0])
+    # end
   end
 end

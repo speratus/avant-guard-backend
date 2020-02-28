@@ -19,10 +19,12 @@ RSpec.describe Friendship, type: :model do
     end
 
     it 'belongs to a friended' do
-      friender = User.new
-      friended = User.new
+      friender = User.create(name: 'name', username: 'demo', password: 'ytho')
+      friended = User.create(name: 'name', username: 'demo2', password: 'bcuzy!')
 
-      expect {friendship = friended.friendships.build(friender: friender)}.not_to raise_error
+      friendship = nil
+      expect {friendship = friender.friendships.build(friended: friended)}.not_to raise_error
+      friender.save
 
       expect(friended.frienders).to include(friender)
     end
