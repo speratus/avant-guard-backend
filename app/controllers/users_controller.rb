@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
     def friends
         friends = [@user.friends, @user.frienders]
-        friends = friends.flatten
+        friends = friends.flatten.uniq
         render json: basic_user_data(friends)
     end
 
