@@ -23,6 +23,12 @@ class UsersController < ApplicationController
         render json: basic_user_data(@user)
     end
 
+    def friends
+        friends = [@user.friends, @user.frienders]
+        friends = friends.flatten
+        render json: basic_user_data(friends)
+    end
+
     def update
         @user.update_attributes(user_params)
 
