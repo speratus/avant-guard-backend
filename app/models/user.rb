@@ -11,7 +11,8 @@ class User < ApplicationRecord
     has_many :friendships, foreign_key: :friender_id, dependent: :destroy
     has_many :friends, through: :friendships, source: :friended
 
-    has_many :frienders, through: :friendships, source: :friender
+    has_many :friendedships, class_name: 'Friendship', foreign_key: :friended_id, dependent: :destroy
+    has_many :frienders, through: :friendedships, source: :friender
 
     validates :name, :username, :password, presence: true
     validates :username, uniqueness: true
