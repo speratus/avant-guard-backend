@@ -1,8 +1,17 @@
 class FriendshipsController < ApplicationController
 
     def create
+        puts "Received: #{params}"
         friendship = check_authorization(Friendship.new(friendship_params), current_user)
-        render json: basic_friendship_data(friendship)
+
+        if friendship.save
+            render json: basic_friendship_data(friendship)
+        else
+            render json: {
+                message: 'friendship failed to save',
+                errors: friendship.errors.full_messages
+            }
+        end
     end
 
     def destroy
