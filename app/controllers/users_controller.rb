@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :verify_authentication, except: [:create]
+    before_action :verify_authentication, except: [:create, :index]
 
     def create
         user = User.new(user_params)
@@ -12,6 +12,11 @@ class UsersController < ApplicationController
                 errors: user.errors.full_messages
             }
         end
+    end
+
+    def index
+        users = check_authorization(User.all, current_user)
+        render json: basic_user_data(users)
     end
 
     def show

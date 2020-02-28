@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :users, except: [:index] do
+  resources :users do
     resources :genre_scores, only: :index
   end
   resources :sessions, only: [:create]

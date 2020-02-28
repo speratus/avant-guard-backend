@@ -44,7 +44,7 @@ class User < ApplicationRecord
         # ranking
     end
 
-    check_perm 'users#show' do |user, current_user|
+    check_perm 'users#show', 'users#index' do |user, current_user|
         !current_user.nil?
     end
 
