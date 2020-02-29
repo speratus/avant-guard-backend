@@ -1,8 +1,8 @@
 GIT
   remote: git@github.com:speratus/authorizer.git
-  revision: 3d3ce1522abde58254899e38113f9719b8648a3d
+  revision: da0a1605cbaa985b796bd2712290301b609c4a62
   specs:
-    authorizer (0.4.4)
+    authorizer (0.4.8)
       rails (~> 6.0.2, >= 6.0.2.1)
 
 GEM
@@ -115,7 +115,7 @@ GEM
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     pg (1.2.2)
-    puma (4.3.2)
+    puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
     rack-cors (1.1.1)
