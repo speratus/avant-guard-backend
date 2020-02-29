@@ -1,11 +1,13 @@
 class QuestionsController < ApplicationController
+    include GameLogic
+
     before_action :verify_question
 
     def check
         @question.input = check_params[:answer]
 
         if @question.save
-            if @question.input == @question.answer
+            if check_whether_input_correct(@question.input, @question.answer)
                 render json: {result: true}
             else
                 render json: {result: false}
