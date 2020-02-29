@@ -11,7 +11,8 @@ class User < ApplicationRecord
     has_many :friendships, foreign_key: :friender_id, dependent: :destroy
     has_many :friends, through: :friendships, source: :friended
 
-    has_many :frienders, through: :friendships, source: :friender
+    has_many :friendedships, class_name: 'Friendship', foreign_key: :friended_id, dependent: :destroy
+    has_many :frienders, through: :friendedships, source: :friender
 
     validates :name, :username, :password, presence: true
     validates :username, uniqueness: true
@@ -20,7 +21,7 @@ class User < ApplicationRecord
         games = self.games.filter {|g| g.genre == genre}
         puts "genre is nil? #{genre.nil?} games: #{games}. games length #{games.length}"
         score = games.reduce(0) {|agg, g| agg + g.final_score }
-        genre_score = GenreScore.new
+        genre_score = GenreScore.find_or_create_by(genre: genre)
         genre_score.score = score
         genre_score.user = self
         genre_score.genre = genre
@@ -44,11 +45,11 @@ class User < ApplicationRecord
         # ranking
     end
 
-    check_perm 'users#show' do |user, current_user|
+    check_perm 'users#show', 'users#index' do |user, current_user|
         !current_user.nil?
     end
 
-    check_perm 'users#destroy', 'users#update' do |user, current_user|
+    check_perm 'users#destroy', 'users#update', 'users#friends' do |user, current_user|
         user == current_user
     end
 end

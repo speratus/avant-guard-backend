@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :verify_authentication, except: [:create]
+    before_action :verify_authentication, except: [:create, :index]
 
     def create
         user = User.new(user_params)
@@ -14,8 +14,19 @@ class UsersController < ApplicationController
         end
     end
 
+    def index
+        users = check_authorization(User.all, current_user)
+        render json: basic_user_data(users)
+    end
+
     def show
         render json: basic_user_data(@user)
+    end
+
+    def friends
+        friends = [@user.friends, @user.frienders]
+        friends = friends.flatten.uniq
+        render json: basic_user_data(friends)
     end
 
     def update

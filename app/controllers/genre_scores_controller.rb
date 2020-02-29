@@ -1,8 +1,10 @@
 class GenreScoresController < ApplicationController
 
     def index
-        genres = check_authorization(Genre.where(user_id: params[:user_id]), current_user)
-        render json: basic_genre_data(genres)
+        genres = check_authorization(GenreScore.where(user_id: params[:user_id]).order('score DESC').limit(10), current_user)
+        if genres
+            render json: basic_genre_data(genres)
+        end
     end
 
     private
