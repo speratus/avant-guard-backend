@@ -61,7 +61,7 @@ module GameLogic
     def calculate_final_score(game)
         correct = game.questions.map do |q|
             puts "------------#{q.input}; #{q.answer}"
-            q.input == q.answer ? 1 : 0
+            check_whether_input_correct(q.input, q.answer) ? 1 : 0
         end
 
         puts "++++++++++++++++++++++++"
