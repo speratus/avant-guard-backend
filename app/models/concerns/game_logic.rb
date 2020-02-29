@@ -54,7 +54,8 @@ module GameLogic
     end
 
     def check_whether_input_correct(input, correct_answer)
-        dist = DemrauLevenshtein.distance(input, correct_answer)
+        return input == correct_answer if input.to_i > 0 && correct_answer.to_i > 0
+        dist = DamerauLevenshtein.distance(input, correct_answer)
         dist <= 3
     end
 
