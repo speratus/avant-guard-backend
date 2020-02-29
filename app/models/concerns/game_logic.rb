@@ -53,6 +53,11 @@ module GameLogic
         multiplier.ceil
     end
 
+    def check_whether_input_correct(input, correct_answer)
+        dist = DemrauLevenshtein.distance(input, correct_answer)
+        dist <= 3
+    end
+
     def calculate_final_score(game)
         correct = game.questions.map do |q|
             puts "------------#{q.input}; #{q.answer}"
