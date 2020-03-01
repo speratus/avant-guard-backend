@@ -3,7 +3,12 @@ class GamesController < ApplicationController
 
     def create
         puts "===========================#{game_params}"
-        game = check_authorization(Game.construct(current_user, game_params), current_user)
+        begin
+            game = check_authorization(Game.construct(current_user, game_params), current_user)
+        rescue
+            puts "******************** INSUFFICIENT DATA ***********************"
+            render json: {message: 'Could not find enough data to build game with that artist'}
+        end
         puts "--------------Game Lyrics: #{game.lyrics}"
         render json: game_challenge(game)
     end
