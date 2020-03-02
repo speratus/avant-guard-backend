@@ -37,6 +37,11 @@ class Game < ApplicationRecord
             raise ArgumentError, 'You must specify either a genre or an artist!'
             return
         end
+
+        unless song
+            raise 'Insufficient Data to build !'
+        end
+
         game.song = song
         game.multiplier = game.calculate_multiplier(song.listens, song.release_date)
         game.final_score = 0
