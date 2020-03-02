@@ -8,6 +8,7 @@ class GamesController < ApplicationController
         rescue
             puts "******************** INSUFFICIENT DATA ***********************"
             render json: {message: 'Could not find enough data to build game with that artist'}
+            return
         end
         puts "--------------Game Lyrics: #{game.lyrics}"
         render json: game_challenge(game)

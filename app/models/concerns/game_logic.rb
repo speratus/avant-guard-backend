@@ -41,7 +41,7 @@ module GameLogic
     def fetch_image(song)
         artist_name = song.artist.name
         song_name = song.title
-        results = track_get_info(artist_name, song_name)
+        results = track_get_info(url_safe(artist_name), url_safe(song_name))
         if results['track']['album']
             return results['track']['album']['image'][2]["#text"]
         end
@@ -104,7 +104,8 @@ module GameLogic
     end
 
     def url_safe(string)
-        URI.encode(string)
+        puts "================== #{string} =================="
+        URI.encode(string.dup.force_encoding('ASCII-8BIT'))
     end
 
     def pick_new_song_from_genre(genre)
