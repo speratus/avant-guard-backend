@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :users do
     resources :genre_scores, only: :index
+    resources :friendships, only: [:create, :destroy]
 
     get 'friends', on: :member
   end
@@ -10,6 +11,5 @@ Rails.application.routes.draw do
   resources :artists, only: [:index]
   resources :games, except: [:delete]
   resources :rankings, only: [:index]
-  resources :friendships, only: [:create, :destroy]
   patch '/questions/:id', to: 'questions#check'
 end
