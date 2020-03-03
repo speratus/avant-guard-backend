@@ -2,7 +2,14 @@ class FriendshipsController < ApplicationController
 
     def create
         puts "Received: #{params}"
-        friendship = check_authorization(Friendship.new(friendship_params), current_user)
+        friendship = check_authorization(
+            Friendship.new(
+                friender_id: params[:user_id], 
+                friended_idfriendship_params[:friended_id]
+            ), 
+            current_user
+        )
+        friendship.friender = user
 
         if friendship.save
             render json: basic_friendship_data(friendship)
@@ -27,7 +34,7 @@ class FriendshipsController < ApplicationController
     private
 
     def friendship_params
-        params.require(:friendship).permit(:friender_id, :friended_id)
+        params.require(:friendship).permit(:friended_id)
     end
 
     def basic_friendship_data(friendship)
