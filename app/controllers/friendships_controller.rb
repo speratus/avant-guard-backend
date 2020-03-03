@@ -5,11 +5,10 @@ class FriendshipsController < ApplicationController
         friendship = check_authorization(
             Friendship.new(
                 friender_id: params[:user_id], 
-                friended_idfriendship_params[:friended_id]
+                friended_id: friendship_params[:friended_id]
             ), 
             current_user
         )
-        friendship.friender = user
 
         if friendship.save
             render json: basic_friendship_data(friendship)
@@ -29,12 +28,18 @@ class FriendshipsController < ApplicationController
             ), 
             current_user
         )
-        friendship.destroy
-
-        render json: {
-            message: 'destroyed friendship',
-            friendship: basic_friendship_data(friendship)
-        }
+        return unless friendship
+        
+        if friendship.destroy
+            render json: {
+                message: 'destroyed friendship',
+                friendship: basic_friendship_data(friendship)
+            }
+        else
+            render json: {
+                error: 'failed to destroy friendship'
+            }
+        end
     end
 
     private
