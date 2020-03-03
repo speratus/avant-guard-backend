@@ -22,7 +22,13 @@ class FriendshipsController < ApplicationController
     end
 
     def destroy
-        friendship = check_authorization(Friendship.find_by(id: params[:id]), current_user)
+        friendship = check_authorization(
+            Friendship.find_by(
+                friended_id: params[:id],
+                friender_id: params[:user_id]
+            ), 
+            current_user
+        )
         friendship.destroy
 
         render json: {
