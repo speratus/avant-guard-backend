@@ -21,11 +21,20 @@ class FriendshipsController < ApplicationController
     end
 
     def destroy
+        f = Friendship.find_by(
+            friended_id: params[:id],
+            friender_id: params[:user_id]
+        )
+
+        unless f
+            render json: {
+                error: 'You cannot unfriend that person because they have not unfriended you'
+            }
+            return
+        end
+
         friendship = check_authorization(
-            Friendship.find_by(
-                friended_id: params[:id],
-                friender_id: params[:user_id]
-            ), 
+            f, 
             current_user
         )
         return unless friendship
