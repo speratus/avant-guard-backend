@@ -60,3 +60,14 @@ If that does not work for some reason, you should also be able to use this comma
 ```
 bundle exec rspec
 ```
+
+## Dependencies
+
+* [Ruby on Rails](https://rubyonrails.org/)
+* [BCrypt](https://github.com/codahale/bcrypt-ruby)
+* [JWT](https://github.com/jwt/ruby-jwt)
+* [RSpec](http://rspec.info/)
+* [Damerau-Levenshtein](https://github.com/GlobalNamesArchitecture/damerau-levenshtein)
+* [Rest-Client](https://github.com/rest-client/rest-client)
+* [Dotenv-Rails](https://github.com/bkeepers/dotenv)
+* [Rack-CORS](https://github.com/cyu/rack-cors)
